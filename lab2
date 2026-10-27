@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cmath>   
+#include <iomanip>  
+
+int main() {
+
+    setlocale(LC_ALL, "Russian");
+
+    const int N = 9;      
+    double sum = 0.0;     
+    double current_term;  
+
+    std::cout << "Вычисление суммы первых " << N << " членов ряда a_n = e^(-sqrt(n))" << std::endl;
+    std::cout << "------------------------------------------------------------" << std::endl;
+    std::cout << std::setw(5) << "n" << std::setw(15) << "a_n" << std::endl;
+    std::cout << "------------------------------------------------------------" << std::endl;
+
+    for (int n = 1; n <= N; ++n) {
+        current_term = std::exp(-std::sqrt(static_cast<double>(n)));
+        sum += current_term;
+
+        std::cout << std::setw(5) << n << std::setw(15) << std::fixed << std::setprecision(6) << current_term << std::endl;
+    }
+
+    std::cout << "------------------------------------------------------------" << std::endl;
+    std::cout << "итоговая сумма: " << std::fixed << std::setprecision(6) << sum << std::endl;
+
+    return 0;
+}
