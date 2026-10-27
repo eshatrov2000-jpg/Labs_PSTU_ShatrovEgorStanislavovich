@@ -1,0 +1,47 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+
+    double a = -2.0;
+    double b = -1.0;
+    int k = 10;
+    int n_fixed = 40;
+    double epsilon = 0.0001;
+    double step = (b - a) / k;
+
+    std::cout << std::fixed << std::setprecision(6);
+    std::cout << "Результаты вычислений:" << std::endl;
+    std::cout << "--------------------------------------------------------------------------------" << std::endl;
+
+    for (double x = a; x <= b + 1e-9; x += step) {
+
+    
+        double sn_fixed = 0.0;
+        for (int i = 1; i <= n_fixed; ++i) {
+            double term = std::pow(-1, i) * std::pow(1 + x, 2 * i) / i;
+            sn_fixed += term;
+        }
+
+        double se_eps = 0.0;
+        double term_eps;
+        int i = 1;
+        do {
+            term_eps = std::pow(-1, i) * std::pow(1 + x, 2 * i) / i;
+            se_eps += term_eps;
+            i++;
+        } while (std::abs(term_eps) >= epsilon); 
+
+        double y_exact = -std::log(2 + 2 * x + x * x);
+
+      
+        std::cout << "X=" << std::setw(7) << x 
+                  << " SN=" << std::setw(10) << sn_fixed 
+                  << " SE=" << std::setw(10) << se_eps 
+                  << " Y=" << std::setw(10) << y_exact << std::endl;
+    }
+
+    return 0;
+}
